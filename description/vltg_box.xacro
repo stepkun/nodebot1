@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+    <!-- dimensions of the vltg box -->
+    <xacro:property name="vltglength" value="0.040" />
+    <xacro:property name="vltgwidth" value="0.025" />
+    <xacro:property name="vltgheight" value="0.014" />
+
+    <material name="vltg-box">
+        <color rgba="1.0 0.5 0.5 1.0" />
+    </material>
+
+    <link name="vltg_box">
+        <visual>
+            <origin xyz="0.0 0.0 ${vltgheight/2}" />
+            <geometry>
+                <box size="${vltglength} ${vltgwidth} ${vltgheight}" />
+            </geometry>
+            <material name="vltg-box" />
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 ${vltgheight/2}" />
+            <geometry>
+                <box size="${vltglength} ${vltgwidth} ${vltgheight}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="0.009" x="${vltglength}" y="${vltgwidth}" z="${vltgheight}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </link>
+</robot>

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- dimensions of the sensor box -->
+    <xacro:property name="rcwlength" value="0.011" />
+    <xacro:property name="rcwwidth" value="0.031" />
+    <xacro:property name="rcwheight" value="0.016" />
+
+    <material name="rcw0001-plane">
+        <color rgba="0.0 0.5 0.0 1.0" />
+    </material>
+
+    <material name="rcw0001-sensors">
+        <color rgba="0.0 0.0 0.0 1.0" />
+    </material>
+
+    <xacro:macro name="rcw0001_joint" params="prefix base rotateZ moveX moveY moveZ">
+        <joint name="${prefix}_rcw0001" type="fixed">
+            <parent link="${base}" />
+            <child link="${prefix}_rcw0001" />
+            <origin rpy="0.0 0.0 ${rotateZ}" xyz="${moveX} ${moveY} ${moveZ-rcwheight/2}" />
+        </joint>
+    </xacro:macro>
+
+    <xacro:macro name="rcw0001" params="prefix">
+        <link name="${prefix}_rcw0001">
+            <visual>
+                <origin xyz="-${rcwlength*4/5} 0.0 ${rcwheight/2}" />
+                <geometry>
+                    <box size="${rcwlength/5} ${rcwwidth} ${rcwheight}" />
+                </geometry>
+                <material name="rcw0001-plane" />
+            </visual>
+            <visual>
+                <origin xyz="${rcwlength/5} ${rcwwidth/2} ${rcwheight/2}" />
+                <geometry>
+                    <cylinder radius="${rcwheight/4}" length="${rcwlength*4/5}" />
+                </geometry>
+                <material name="rcw0001-sensors" />
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 ${rcwheight/2}" />
+                <geometry>
+                    <box size="${rcwlength} ${rcwwidth} ${rcwheight}" />
+                </geometry>
+            </collision>
+            <xacro:inertial_box mass="0.004" x="${rcwlength}" y="${rcwwidth}" z="${rcwheight}">
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </xacro:inertial_box>
+        </link>
+    </xacro:macro>
+
+</robot>

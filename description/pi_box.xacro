@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- dimensions of the pi box -->
+    <xacro:property name="pilength" value="0.088" />
+    <xacro:property name="piwidth" value="0.056" />
+    <xacro:property name="piheight" value="0.028" />
+
+    <material name="pi-box">
+        <color rgba="1.0 0.5 0.5 1.0" />
+    </material>
+
+    <link name="pi_box">
+        <visual>
+            <origin xyz="0.0 0.0 ${piheight/2}" />
+            <geometry>
+                <box size="${pilength} ${piwidth} ${piheight}" />
+            </geometry>
+            <material name="pi-box" />
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 ${piheight/2}" />
+            <geometry>
+                <box size="${pilength} ${piwidth} ${piheight}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="0.100" x="${pilength}" y="${piwidth}" z="${piheight}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </link>
+</robot>

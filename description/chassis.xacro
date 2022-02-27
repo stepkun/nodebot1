@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+     <xacro:include filename="inertial_macros.xacro"/>
+
+     <!-- distance between chassis body and ground -->
+     <xacro:property name="clearance" value="0.044" />
+     
+     <!-- dimensions of the center part of the body -->
+     <xacro:property name="bodylength" value="0.190" />
+     <xacro:property name="bodywidth" value="0.100" />
+     <xacro:property name="bodyheight" value="0.035" />
+
+     <!-- dimensions of a bumper -->
+     <xacro:property name="bumperlength" value="0.032" />
+     <xacro:property name="bumperwidth" value="0.150" />
+
+     <!-- dimensions of a trunk -->
+     <xacro:property name="trunklength" value="0.035" />
+     <xacro:property name="trunkwidth" value="${(bumperwidth-bodywidth)/2}" />
+
+     <material name="body">
+          <color rgba="0.5 0.5 0.5 1.0" />
+     </material>
+
+     <!-- BODY -->
+     <joint name="body_joint" type="fixed">
+          <parent link="base_link"/>
+          <child link="body"/>
+          <origin xyz="0.0 0.0 ${clearance+bodyheight/2}"/>
+     </joint>
+
+    <link name="body">
+        <visual>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+            <geometry>
+                <box size="${bodylength} ${bodywidth} ${bodyheight}" />
+            </geometry>
+            <material name="body" />
+        </visual>
+        <visual>
+            <origin rpy="0.0 0.0 0.0" xyz="${(bodylength+bumperlength)/2} 0.0 0.0" />
+            <geometry>
+                <box size="${bumperlength} ${bumperwidth} ${bodyheight}" />
+            </geometry>
+            <material name="body" />
+        </visual>
+        <visual>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 ${(bodywidth+trunkwidth)/2} 0.0" />
+            <geometry>
+                <box size="${trunklength} ${trunkwidth} ${bodyheight}" />
+            </geometry>
+            <material name="body" />
+        </visual>
+        <visual>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 ${(-bodywidth-trunkwidth)/2} 0.0" />
+            <geometry>
+                <box size="${trunklength} ${trunkwidth} ${bodyheight}" />
+            </geometry>
+            <material name="body" />
+        </visual>
+        <visual>
+            <origin rpy="0.0 0.0 0.0" xyz="${(-bodylength-bumperlength)/2} 0.0 0.0" />
+            <geometry>
+                <box size="${bumperlength} ${bumperwidth} ${bodyheight}" />
+            </geometry>
+            <material name="body" />
+        </visual>
+        <collision>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+            <geometry>
+                <box size="${bodylength+2*bumperlength} ${bumperwidth} ${bodyheight}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="0.540" x="${bodylength+2*bumperlength}" y="${bumperwidth}" z="${bodyheight}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </link>
+
+     <!-- DRIVE_UNITS -->
+     <xacro:include filename="drive_unit.xacro" />
+     <!-- front left -->
+     <xacro:drive_joint prefix="front_left" base="body" rotateX="0" rotateY="0" rotateZ="0" moveX="${(bodylength+trunklength)/4}" moveY="${bodywidth/2}" moveZ="-${bodyheight/2}" />
+     <xacro:drive_unit prefix="front_left" />
+     <!-- front right -->
+     <xacro:drive_joint prefix="front_right" base="body" rotateX="${pi}" rotateY="0" rotateZ="0" moveX="${(bodylength+trunklength)/4}" moveY="-${bodywidth/2}" moveZ="-${bodyheight/2}" />
+     <xacro:drive_unit prefix="front_right" />
+     <!-- rear left -->
+     <xacro:drive_joint prefix="rear_left" base="body" rotateX="${pi}" rotateY="0" rotateZ="${pi}" moveX="-${(bodylength+trunklength)/4}" moveY="${bodywidth/2}" moveZ="-${bodyheight/2}" />
+     <xacro:drive_unit prefix="rear_left" />
+     <!-- rear right -->
+      <xacro:drive_joint prefix="rear_right" base="body" rotateX="0" rotateY="0" rotateZ="${pi}" moveX="-${(bodylength+trunklength)/4}" moveY="-${bodywidth/2}" moveZ="-${bodyheight/2}" />
+     <xacro:drive_unit prefix="rear_right" />
+
+    <!-- PI-BOX -->
+    <joint name="pi_box_joint" type="fixed">
+        <parent link="body" />
+        <child link="pi_box" />
+        <origin xyz="-0.020 0.0 ${bodyheight/2}" />
+    </joint>
+    <xacro:include filename="pi_box.xacro" />
+
+    <!-- VOLTAGE BOX -->
+    <joint name="base_to_vltg_box" type="fixed">
+        <parent link="body" />
+        <child link="vltg_box" />
+        <origin xyz="-0.084 0.0 ${bodyheight/2}" />
+    </joint>
+    <xacro:include filename="vltg_box.xacro" />
+
+    <!-- ULTRASONIC SENSORS -->
+    <xacro:include filename="rcw0001_sensor.xacro" />
+    <xacro:rcw0001_joint prefix="front_left" base="body" rotateZ="${pi/6}" moveX="0.115" moveY="0.055" moveZ="-${bodyheight/2}" />
+    <xacro:rcw0001 prefix="front_left" />
+    <xacro:rcw0001_joint prefix="front_center" base="body" rotateZ="0" moveX="0.125" moveY="0" moveZ="-${bodyheight/2}" />
+    <xacro:rcw0001 prefix="front_center" />
+    <xacro:rcw0001_joint prefix="front_right" base="body" rotateZ="${-pi/6}" moveX="0.115" moveY="-0.055" moveZ="-${bodyheight/2}" />
+    <xacro:rcw0001 prefix="front_right" />
+    <xacro:rcw0001_joint prefix="rear_left" base="body" rotateZ="${pi-pi/6}" moveX="-0.115" moveY="0.055" moveZ="-${bodyheight/2}" />
+    <xacro:rcw0001 prefix="rear_left" />
+    <xacro:rcw0001_joint prefix="rear_center" base="body" rotateZ="${pi}" moveX="-0.125" moveY="0" moveZ="-${bodyheight/2}" />
+    <xacro:rcw0001 prefix="rear_center" />
+    <xacro:rcw0001_joint prefix="rear_right" base="body" rotateZ="${pi+pi/6}" moveX="-0.115" moveY="-0.055" moveZ="-${bodyheight/2}" />
+    <xacro:rcw0001 prefix="rear_right" />
+
+</robot>
