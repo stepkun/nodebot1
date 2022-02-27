@@ -25,21 +25,28 @@
     <xacro:macro name="rcw0001" params="prefix">
         <link name="${prefix}_rcw0001">
             <visual>
-                <origin xyz="-${rcwlength*4/5} 0.0 ${rcwheight/2}" />
+                <origin xyz="-${rcwlength*2/5} 0.0 0.0" />
                 <geometry>
                     <box size="${rcwlength/5} ${rcwwidth} ${rcwheight}" />
                 </geometry>
                 <material name="rcw0001-plane" />
             </visual>
             <visual>
-                <origin xyz="${rcwlength/5} ${rcwwidth/2} ${rcwheight/2}" />
+                <origin rpy="0.0 ${pi/2} 0.0" xyz="${rcwlength/10} ${rcwwidth/4} 0.0" />
                 <geometry>
-                    <cylinder radius="${rcwheight/4}" length="${rcwlength*4/5}" />
+                    <cylinder radius="${rcwheight/2.2}" length="${rcwlength*4/5}" />
+                </geometry>
+                <material name="rcw0001-sensors" />
+            </visual>
+            <visual>
+                <origin rpy="0.0 ${pi/2} 0.0" xyz="${rcwlength/10} -${rcwwidth/4} 0.0" />
+                <geometry>
+                    <cylinder radius="${rcwheight/2.2}" length="${rcwlength*4/5}" />
                 </geometry>
                 <material name="rcw0001-sensors" />
             </visual>
             <collision>
-                <origin xyz="0.0 0.0 ${rcwheight/2}" />
+                <origin xyz="0.0 0.0 0.0" />
                 <geometry>
                     <box size="${rcwlength} ${rcwwidth} ${rcwheight}" />
                 </geometry>
