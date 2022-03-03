@@ -7,22 +7,20 @@ from launch.substitutions import LaunchConfiguration
 from launch.actions import DeclareLaunchArgument
 from launch_ros.actions import Node
 
-import xacro
-
-
 def generate_launch_description():
 
     # Check if we're told to use sim time
     use_sim_time = LaunchConfiguration('use_sim_time')
 
-    # Process the URDF file
-    pkg_path = os.path.join(get_package_share_directory('nodebot1'))
-    
     # Create a joint_state_publisher_gui node
-    node_joint_state_publisher = Node(
+    params = {'use_sim_time': use_sim_time}
+    node_joint_state_publisher_gui = Node(
         package='joint_state_publisher_gui',
+        namespace='',
         executable='joint_state_publisher_gui',
+        name='joint_state_pubisher_gui',
         output='screen',
+        parameters=[params]
     )
 
     # Launch!
@@ -32,5 +30,5 @@ def generate_launch_description():
             default_value='false',
             description='Use sim time if true'),
 
-        node_joint_state_publisher
+        node_joint_state_publisher_gui
     ])

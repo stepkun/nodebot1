@@ -7,8 +7,6 @@ from launch.substitutions import LaunchConfiguration
 from launch.actions import DeclareLaunchArgument
 from launch_ros.actions import Node
 
-import xacro
-
 def generate_launch_description():
 
     # Check if we're told to use sim time
@@ -16,20 +14,17 @@ def generate_launch_description():
 
     # Package path
     pkg_path = os.path.join(get_package_share_directory('nodebot1'))
-
-    # Process the URDF file
-    xacro_file = os.path.join(pkg_path,'description','nodebot1.urdf.xacro')
-    robot_description_config = xacro.process_file(xacro_file)
     
-    # Create a robot_state_publisher node
-    params = {'robot_description': robot_description_config.toxml(), 'use_sim_time': use_sim_time}
-    node_robot_state_publisher = Node(
-        package='robot_state_publisher',
+    # Create a rviz2 node
+    params = {'use_sim_time': use_sim_time}
+    node_rviz = Node(
+        package='rviz2',
         namespace='',
-        executable='robot_state_publisher',
-        name='robot_state_publisher',
+        executable='rviz2',
+        name='rviz2',
         output='screen',
-        parameters=[params]
+        parameters=[params],
+        arguments=['-d' + os.path.join(pkg_path, 'config', 'view_bot.rviz')]
     )
 
     # Launch!
@@ -39,5 +34,5 @@ def generate_launch_description():
             default_value='false',
             description='Use sim time if true'),
 
-        node_robot_state_publisher
+        node_rviz
     ])
