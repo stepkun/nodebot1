@@ -4,7 +4,7 @@
     <!-- dimensions of the pi box -->
     <xacro:property name="pilength" value="0.088" />
     <xacro:property name="piwidth" value="0.056" />
-    <xacro:property name="piheight" value="0.028" />
+    <xacro:property name="piheight" value="0.040" />
 
     <material name="pi-box">
         <color rgba="1.0 0.5 0.5 1.0" />

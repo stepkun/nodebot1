@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- dimensions of the pan tilt cam -->
+    <xacro:property name="base_length" value="0.036" />
+    <xacro:property name="base_width" value="0.032" />
+    <xacro:property name="base_height" value="0.004" />
+    <xacro:property name="v_armlength" value="0.038" />
+    <xacro:property name="v_armdiameter" value="0.024" />
+    <xacro:property name="h_armlength" value="0.027" />
+    <xacro:property name="h_armheight" value="0.006" />
+    <xacro:property name="cam_plate_length" value="0.004" />
+    <xacro:property name="cam_plate_width" value="0.030" />
+    <xacro:property name="cam_plate_height" value="0.030" />
+
+    <material name="pan-tilt-arm">
+        <color rgba="0.0 0.0 0.0 1.0" />
+    </material>
+
+    <link name="pan_tilt_cam_base">
+        <visual>
+            <origin xyz="0.0 0.0 ${base_height/2}" />
+            <geometry>
+                <box size="${base_length} ${base_width} ${base_height}" />
+            </geometry>
+            <material name="pan-tilt-arm" />
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 ${base_height/2}" />
+            <geometry>
+                <box size="${base_length} ${base_width} ${base_height}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="0.002" x="${base_length}" y="${base_width}" z="${base_height}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </link>
+
+    <joint name="vertical_arm_joint" type="revolute">
+        <parent link="pan_tilt_cam_base" />
+        <child link="vertical_arm" />
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${v_armlength/2}" />
+        <axis rpy="0.0 0.0 0.0" xyz="0.0 0.0 1" />
+        <limit lower="${-pi/3}" upper="${pi/3}" velocity="100" effort="100"/> 
+    </joint>
+
+    <link name="vertical_arm">
+        <visual>
+            <geometry>
+                <cylinder radius="${v_armdiameter/2}" length="${v_armlength}" />
+            </geometry>
+            <material name="pan-tilt-arm" />
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${v_armdiameter/2}" length="${v_armlength}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="0.001" length="${v_armlength}" radius="${v_armdiameter/2}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+    <joint name="horizontal_arm_joint" type="fixed">
+        <parent link="vertical_arm" />
+        <child link="horizontal_arm" />
+        <origin rpy="0.0 0.0 0.0" xyz="${h_armlength/2} 0.0 ${v_armlength/2}" />
+    </joint>
+
+    <link name="horizontal_arm">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" />
+            <geometry>
+                <box size="${h_armlength} ${v_armdiameter} ${h_armheight}" />
+            </geometry>
+            <material name="pan-tilt-arm" />
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 ${base_height/2}" />
+            <geometry>
+                <box size="${h_armlength} ${v_armdiameter} ${h_armheight}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="0.002" x="${h_armlength}" y="${v_armdiameter}" z="${h_armheight}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </link>
+
+    <joint name="cam_plate_joint" type="revolute">
+        <parent link="horizontal_arm" />
+        <child link="cam_plate" />
+        <origin rpy="0.0 0.0 0.0" xyz="${h_armlength/2} 0.0 0.0" />
+        <axis rpy="0.0 0.0 0.0" xyz="0.0 -1 0.0" />
+        <limit lower="${-pi/12}" upper="${5*pi/12}" velocity="100" effort="100"/> 
+    </joint>
+
+    <link name="cam_plate">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" />
+            <geometry>
+                <box size="${cam_plate_length} ${cam_plate_width} ${cam_plate_height}" />
+            </geometry>
+            <material name="pan-tilt-arm" />
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" />
+            <geometry>
+                <box size="${cam_plate_length} ${cam_plate_width} ${cam_plate_height}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="0.001" x="${cam_plate_length}" y="${cam_plate_width}" z="${cam_plate_height}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </link>
+
+    <joint name="camera_joint" type="fixed">
+        <parent link="cam_plate" />
+        <child link="camera" />
+        <origin rpy="0.0 0.0 0.0" xyz="${cam_plate_length/2} 0.0 0.0" />
+    </joint>
+    <xacro:include filename="camera.xacro" />
+
+</robot>

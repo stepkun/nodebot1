@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- dimensions of the camera -->
+    <xacro:property name="cam_length" value="0.005" />
+    <xacro:property name="cam_width" value="0.02" />
+    <xacro:property name="cam_height" value="0.02" />
+    <xacro:property name="lense_length" value="0.01" />
+    <xacro:property name="lense_diameter" value="0.012" />
+
+    <material name="cam">
+        <color rgba="1.0 1.0 1.0 0.5" />
+    </material>
+
+    <link name="camera">
+        <visual>
+            <origin xyz="${cam_length/2} 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="${cam_length} ${cam_width} ${cam_height}" />
+            </geometry>
+            <material name="cam" />
+        </visual>
+        <visual>
+            <origin xyz="${lense_length/2+cam_length} 0 0" rpy="0 ${pi/2} 0"/>
+            <geometry>
+                <cylinder length="${lense_length}" radius="${lense_diameter/2}" />
+            </geometry>
+            <material name="cam" />
+        </visual>
+        <collision>
+            <origin xyz="${cam_length/2+0.001} 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="${cam_length/2+0.002} ${cam_width} ${cam_height}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="0.005" x="${cam_length/2+0.002}" y="${cam_width}" z="${cam_height}">
+            <origin xyz="0.0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </link>
+
+</robot>

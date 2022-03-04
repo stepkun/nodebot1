@@ -123,4 +123,12 @@
     <xacro:rcw0001_joint prefix="rear_right" base="body" rotateZ="${pi+pi/6}" moveX="-0.115" moveY="-0.055" moveZ="-${bodyheight/2}" />
     <xacro:rcw0001 prefix="rear_right" />
 
+    <!-- PAN-TILT CAMERA -->
+    <joint name="base_to_pan_tilt_cam" type="fixed">
+        <parent link="body" />
+        <child link="pan_tilt_cam_base" />
+        <origin xyz="0.058 0.0 ${bodyheight/2}" />
+    </joint>
+    <xacro:include filename="pan_tilt_cam.xacro" />
+
 </robot>
