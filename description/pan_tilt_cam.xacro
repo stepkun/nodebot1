@@ -40,7 +40,7 @@
         <parent link="pan_tilt_cam_base" />
         <child link="vertical_arm" />
         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${v_armlength/2}" />
-        <axis rpy="0.0 0.0 0.0" xyz="0.0 0.0 1" />
+        <axis rpy="0.0 0.0 0.0" xyz="0.0 0.0 -1" />
         <limit lower="${-pi/3}" upper="${pi/3}" velocity="100" effort="100"/> 
     </joint>
 
