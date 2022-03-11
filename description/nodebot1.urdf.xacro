@@ -9,4 +9,7 @@
     <!-- CHASSIS -->
     <xacro:include filename="chassis.xacro" />
 
+    <!-- Controls for Simulation with Gazebo -->
+    <xacro:include filename="gazebo_control.xacro" />
+
 </robot>

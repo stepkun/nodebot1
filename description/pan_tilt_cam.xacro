@@ -36,6 +36,10 @@
         </xacro:inertial_box>
     </link>
 
+    <gazebo reference="pan_tilt_cam_base">
+        <material>Gazebo/Black</material>
+    </gazebo>
+
     <joint name="vertical_arm_joint" type="revolute">
         <parent link="pan_tilt_cam_base" />
         <child link="vertical_arm" />
@@ -61,6 +65,10 @@
         </xacro:inertial_cylinder>
     </link>
 
+    <gazebo reference="vertical_arm">
+        <material>Gazebo/Black</material>
+    </gazebo>
+
     <joint name="horizontal_arm_joint" type="fixed">
         <parent link="vertical_arm" />
         <child link="horizontal_arm" />
@@ -85,6 +93,10 @@
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_box>
     </link>
+
+    <gazebo reference="horizontal_arm">
+        <material>Gazebo/Black</material>
+    </gazebo>
 
     <joint name="cam_plate_joint" type="revolute">
         <parent link="horizontal_arm" />
@@ -112,6 +124,10 @@
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_box>
     </link>
+
+    <gazebo reference="cam_plate">
+        <material>Gazebo/Black</material>
+    </gazebo>
 
     <joint name="camera_joint" type="fixed">
         <parent link="cam_plate" />

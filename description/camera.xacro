@@ -38,4 +38,8 @@
         </xacro:inertial_box>
     </link>
 
+    <gazebo reference="camera">
+        <material>Gazebo/Black</material>
+    </gazebo>
+
 </robot>

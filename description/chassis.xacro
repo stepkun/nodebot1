@@ -77,20 +77,24 @@
         </xacro:inertial_box>
     </link>
 
+    <gazebo reference="body">
+        <material>Gazebo/White</material>
+    </gazebo>
+
      <!-- DRIVE_UNITS -->
      <xacro:include filename="drive_unit.xacro" />
      <!-- front left -->
      <xacro:drive_joint prefix="front_left" base="body" rotateX="0" rotateY="0" rotateZ="0" moveX="${(bodylength+trunklength)/4}" moveY="${bodywidth/2}" moveZ="-${bodyheight/2}" />
-     <xacro:drive_unit prefix="front_left" />
+     <xacro:drive_unit prefix="front_left" direction="1" />
      <!-- front right -->
      <xacro:drive_joint prefix="front_right" base="body" rotateX="${pi}" rotateY="0" rotateZ="0" moveX="${(bodylength+trunklength)/4}" moveY="-${bodywidth/2}" moveZ="-${bodyheight/2}" />
-     <xacro:drive_unit prefix="front_right" />
+     <xacro:drive_unit prefix="front_right" direction="-1" />
      <!-- rear left -->
      <xacro:drive_joint prefix="rear_left" base="body" rotateX="${pi}" rotateY="0" rotateZ="${pi}" moveX="-${(bodylength+trunklength)/4}" moveY="${bodywidth/2}" moveZ="-${bodyheight/2}" />
-     <xacro:drive_unit prefix="rear_left" />
+     <xacro:drive_unit prefix="rear_left" direction="1" />
      <!-- rear right -->
       <xacro:drive_joint prefix="rear_right" base="body" rotateX="0" rotateY="0" rotateZ="${pi}" moveX="-${(bodylength+trunklength)/4}" moveY="-${bodywidth/2}" moveZ="-${bodyheight/2}" />
-     <xacro:drive_unit prefix="rear_right" />
+     <xacro:drive_unit prefix="rear_right" direction="-1" />
 
     <!-- PI-BOX -->
     <joint name="pi_box_joint" type="fixed">
