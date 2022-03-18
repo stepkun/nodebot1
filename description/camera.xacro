@@ -39,7 +39,7 @@
     </link>
 
     <gazebo reference="camera">
-        <material>Gazebo/Black</material>
+        <material>Gazebo/Orange</material>
     </gazebo>
 
 </robot>

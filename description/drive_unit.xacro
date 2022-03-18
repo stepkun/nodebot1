@@ -82,10 +82,10 @@
             <material>Gazebo/Black</material>
             <mu1 value="0.5"/>
             <mu2 value="0.5"/>
+<!--
+            <mu  value="0.5"/>
             <kp value="1000000.0"/>
             <kd value="1.0"/>
-<!--
-            <mu  value="0.1"/>
             <slip  value="1.0" />
             <slip1 value="1.0" />
             <slip2 value="1.0" />

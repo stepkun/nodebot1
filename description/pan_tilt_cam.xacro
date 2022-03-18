@@ -45,7 +45,8 @@
         <child link="vertical_arm" />
         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${v_armlength/2}" />
         <axis rpy="0.0 0.0 0.0" xyz="0.0 0.0 -1" />
-        <limit lower="${-pi/3}" upper="${pi/3}" velocity="100" effort="100"/> 
+        <limit lower="${-pi/3}" upper="${pi/3}" velocity="100" effort="100" />
+        <dynamics damping="1.0" friction="1.0" />
     </joint>
 
     <link name="vertical_arm">
@@ -103,7 +104,8 @@
         <child link="cam_plate" />
         <origin rpy="0.0 0.0 0.0" xyz="${h_armlength/2} 0.0 0.0" />
         <axis rpy="0.0 0.0 0.0" xyz="0.0 -1 0.0" />
-        <limit lower="${-pi/12}" upper="${5*pi/12}" velocity="100" effort="100"/> 
+        <limit lower="${-pi/12}" upper="${5*pi/12}" velocity="100" effort="100" /> 
+        <dynamics damping="1.0" friction="1.0" />
     </joint>
 
     <link name="cam_plate">
