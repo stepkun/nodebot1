@@ -23,7 +23,14 @@ def generate_launch_description():
                 PythonLaunchDescriptionSource([os.path.join(
                     get_package_share_directory(package_name),'launch','rsp.launch.py'
                 )]), launch_arguments={'use_sim_time': 'true'}.items()
-    )
+            )
+
+    # Include the Gamepad launch file, provided by our own package
+    gamepad = IncludeLaunchDescription(
+                PythonLaunchDescriptionSource([os.path.join(
+                    get_package_share_directory(package_name),'launch','gamepad.launch.py'
+                )]), launch_arguments={'use_sim_time': 'true'}.items()
+             )
 
     # Include the Gazebo launch file, provided by the gazebo_ros package
     gazebo = IncludeLaunchDescription(
@@ -42,6 +49,7 @@ def generate_launch_description():
     # Launch them all!
     return LaunchDescription([
         rsp,
+        gamepad,
         gazebo,
         spawn_entity,
     ])
