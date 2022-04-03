@@ -14,11 +14,10 @@ from launch_ros.actions import Node
 def generate_launch_description():
 
 
-    # Include the robot_state_publisher launch file, provided by our own package. Force sim time to be enabled
     # !!! MAKE SURE YOU SET THE PACKAGE NAME CORRECTLY !!!
-
     package_name='nodebot1' #<--- CHANGE ME
 
+    # Include the robot_state_publisher launch file, provided by our own package. Force sim time to be enabled
     rsp = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
                     get_package_share_directory(package_name),'launch','rsp.launch.py'
@@ -28,7 +27,7 @@ def generate_launch_description():
     # Include the Gamepad launch file, provided by our own package
     gamepad = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
-                    get_package_share_directory(package_name),'launch','gamepad.launch.py'
+                    get_package_share_directory(package_name),'launch','gamepad_sim.launch.py'
                 )]), launch_arguments={'use_sim_time': 'true'}.items()
              )
 

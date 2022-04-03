@@ -13,7 +13,7 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time')
 
     # Package path
-    pkg_path = os.path.join(get_package_share_directory('nodebot1'))
+    pkg_path = os.path.join(get_package_share_directory('nodebot1')) #<--- CHANGE ME
     
     # Create a rviz2 node
     params = {'use_sim_time': use_sim_time}

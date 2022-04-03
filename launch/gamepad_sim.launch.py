@@ -25,6 +25,7 @@ def generate_launch_description():
                 'default_trig_val': False,      # read buttons on startup
              }]
         ),
+        # convert /joy to /cmd_vel
         Node(
             package='teleop_twist_joy',
             executable='teleop_node',
@@ -33,14 +34,11 @@ def generate_launch_description():
                 'enable_button': 5,             # right bumper-button is 5
                 'enable_turbo_button': 4,      # left bummper-button is 4
                 'axis_linear.x': 4,             # right sticks vertical axis
-                'scale_linear.x': 0.0125,
-                'scale_linear_turbo.x': 0.025,
+                'scale_linear.x': 0.5,
+                'scale_linear_turbo.x': 1.25,
                 'axis_angular.yaw': 0,          # left sticks horizontal axis
-                'scale_angular.yaw': 0.125,
-                'scale_angular_turbo.yaw': 0.25,
+                'scale_angular.yaw': 1.0,
+                'scale_angular_turbo.yaw': 2.5,
             }],
-            remappings=[
-                ('/cmd_vel', '/chassis/cmd_vel'),
-            ],        
-        ),
+        )
     ])
