@@ -17,13 +17,6 @@ def generate_launch_description():
     # !!! MAKE SURE YOU SET THE PACKAGE NAME CORRECTLY !!!
     package_name='nodebot1' #<--- CHANGE ME
 
-    # Include the Gamepad launch file, provided by our own package
-    gamepad = IncludeLaunchDescription(
-                PythonLaunchDescriptionSource([os.path.join(
-                    get_package_share_directory(package_name),'launch','gamepad.launch.py'
-                )]), launch_arguments={'use_sim_time': 'true'}.items()
-             )
-
     # Include the micro-ROS-Agent launch file, provided by our own package
     agent = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
@@ -33,6 +26,5 @@ def generate_launch_description():
 
     # Launch them all!
     return LaunchDescription([
-        gamepad,
-        agent
+        agent,
     ])
