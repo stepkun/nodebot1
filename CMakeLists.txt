@@ -17,9 +17,11 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+find_package(ament_cmake_python REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclpy REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -32,6 +34,29 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+# Include C++ "include" directory
+include_directories(include)
+
+# Create C++ executable
+add_executable(control_cpp src/control.cpp)
+ament_target_dependencies(control_cpp rclcpp geometry_msgs std_msgs)
+
+# Install C++ executables
+install(
+  TARGETS control_cpp
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+# Install Python modules
+ament_python_install_package(nodebot1)
+
+# Install Python executables as scripts
+install(PROGRAMS
+  scripts/control_py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+# Install launch files ets
 install(
   DIRECTORY config description launch worlds
   DESTINATION share/${PROJECT_NAME}
