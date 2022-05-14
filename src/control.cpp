@@ -25,7 +25,7 @@ class Control : public rclcpp::Node
         );
 
         this->publisher_ = this->create_publisher<geometry_msgs::msg::Twist>(
-            "/chassis/cmd_vel",
+            "/nodebot1/chassis/cmd_vel",
             10
         );
     }
