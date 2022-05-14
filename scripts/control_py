@@ -24,7 +24,7 @@ class Control(Node):
 
         self.subscription  # prevent unused variable warning
         # publisher for cmd_vel in namespace chassis
-        self.publisher = self.create_publisher(Twist, '/chassis/cmd_vel', 10)
+        self.publisher = self.create_publisher(Twist, '/nodebot1/chassis/cmd_vel', 10)
 
 
     def listener_callback(self, msg):
