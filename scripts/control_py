@@ -16,10 +16,15 @@ class Control(Node):
     '''
     def __init__(self):
         super().__init__('control')
+
+        self.cmd_vel = '/nodebot1/cmd_vel'
+        self.cmd_cam = '/nodebot1/cmd_cam'
+        self.local_cmd_vel = '/local/cmd_vel'
+        self.local_cmd_cam = '/local/cmd_cam'
         # subscription for cmd_vel in namespace of nodebot1
         self.cmd_vel_subscription = self.create_subscription(
             Twist,
-            '/nodebot1/cmd_vel',
+            self.cmd_vel,
             self.listener_cmd_vel_callback,
             10)
         self.cmd_vel_subscription  # prevent unused variable warning
@@ -27,26 +32,26 @@ class Control(Node):
         # subscription for cmd_vel in namespace of nodebot1
         self.cmd_cam_subscription = self.create_subscription(
             Quaternion,
-            '/nodebot1/cmd_cam',
+            self.cmd_cam,
             self.listener_cmd_cam_callback,
             10)
         self.cmd_cam_subscription  # prevent unused variable warning
         
         # publisher for cmd_vel in local namespace chassis
-        self.cmd_vel_publisher = self.create_publisher(Twist, '/local/chassis/cmd_vel', 10)
+        self.cmd_vel_publisher = self.create_publisher(Twist, self.local_cmd_vel, 10)
 
         # publisher for cmd_cam in local namespace chassis
-        self.cmd_cam_publisher = self.create_publisher(Quaternion, '/local/cmd_cam', 10)
+        self.cmd_cam_publisher = self.create_publisher(Quaternion, self.local_cmd_cam, 10)
 
 
     def listener_cmd_vel_callback(self, msg):
-        self.get_logger().debug('/nodebot1/cmd_vel: "%s"' % msg)
+        self.get_logger().debug(self.local_cmd_vel +': "%s"' % msg)
         # re-publish received cmd_vel message
         self.cmd_vel_publisher.publish(msg)
 
 
     def listener_cmd_cam_callback(self, msg):
-        self.get_logger().debug('/nodebot1/cmd_cam: "%s"' % msg)
+        self.get_logger().debug(self.local_cmd_cam + ': "%s"' % msg)
         # re-publish received cmd_vel message
         self.cmd_cam_publisher.publish(msg)
 
