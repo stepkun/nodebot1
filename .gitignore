@@ -1,2 +1,12 @@
+# my personal stuff
+.ideas
+
+# Backup files from FreeCAD
+*.FCStd?
+
+# 3d-printing
+*.gcode
+*.3mf
+
 # Python stuff
 __pycache__
