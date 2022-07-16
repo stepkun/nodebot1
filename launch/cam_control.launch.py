@@ -10,7 +10,7 @@ def generate_launch_description():
     return LaunchDescription([
         # start control node
         Node(
-            package='pan_tilt_cam',
+            package='nodebot1',
             executable='control_py',
             parameters=[]
         ),

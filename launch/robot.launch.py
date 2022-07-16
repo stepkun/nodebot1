@@ -24,6 +24,20 @@ def generate_launch_description():
                 )]), launch_arguments={'use_sim_time': 'false'}.items()
              )
     
+    # Include cam control node
+    cam_control = IncludeLaunchDescription(
+                PythonLaunchDescriptionSource([os.path.join(
+                    get_package_share_directory(package_name),'launch','cam_control.launch.py'
+                )]), launch_arguments={'use_sim_time': 'false'}.items()
+             )
+    
+    # Include ld06 lidar node
+    lidar = IncludeLaunchDescription(
+                PythonLaunchDescriptionSource([os.path.join(
+                    get_package_share_directory(package_name),'launch','ld06_control.launch.py'
+                )]), launch_arguments={'use_sim_time': 'false'}.items()
+             )
+
     # Include the micro-ROS-Agent launch file, provided by our own package
     agent = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
@@ -34,5 +48,7 @@ def generate_launch_description():
     # Launch them all!
     return LaunchDescription([
         control,
+        cam_control,
+        lidar,
         agent,
     ])
